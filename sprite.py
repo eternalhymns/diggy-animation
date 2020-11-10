@@ -56,12 +56,12 @@ class Surpring(pygame.sprite.Sprite):
     
     def update(self):
         if self.is_animating == True:
-            self.current_sprite +=1
+            self.current_sprite += 0.2
             if self.current_sprite >= len(self.sprites):
                 self.current_sprite = 0
                 self.is_animating = False
 
-            self.image = self.sprites[self.current_sprite]
+            self.image = self.sprites[int(self.current_sprite)]
 
 
 
@@ -131,7 +131,9 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        
+        if event.type ==pygame.MOUSEMOTION:
+            moving_sprites.draw(screen)
+            moving_sprites.update()
         if event.type == pygame.MOUSEBUTTONDOWN:
             hand.giggling()
         
@@ -143,9 +145,7 @@ while True:
     pygame.display.flip()
     screen.blit(background, (0,0))
     # cheeks_group.draw(screen)
-    if event.type ==pygame.KEYUP:
-        moving_sprites.draw(screen)
-        moving_sprites.update()
+    
 
     if event.type ==pygame.KEYDOWN:
             if event.key == pygame.K_SPACE: # 스페이스바를 누르면 놀란다
