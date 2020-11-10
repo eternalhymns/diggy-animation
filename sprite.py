@@ -6,7 +6,6 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.sprites = []
         self.sprites.append(pygame.image.load("./frogPlayer/attack_1.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_1.png"))
         self.sprites.append(pygame.image.load("./frogPlayer/attack_2.png"))
         self.sprites.append(pygame.image.load("./frogPlayer/attack_3.png"))
         self.sprites.append(pygame.image.load("./frogPlayer/attack_4.png"))
@@ -28,6 +27,41 @@ class Player(pygame.sprite.Sprite):
             self.current_sprite = 0
 
         self.image = self.sprites[self.current_sprite]
+
+# 놀람
+class Surpring(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.sprites = []
+        self.is_animating = False
+        self.sprites.append(pygame.image.load("./surprise/1_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/1_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/2_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/3_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/4_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/5_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/6_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/7_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/8_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/9_blink.jpg"))
+        
+        self.current_sprite = 0
+        self.image = self.sprites[self.current_sprite]
+
+        self.rect = self.image.get_rect()
+
+    def animate(self):
+        self.is_animating = True
+
+    
+    def update(self):
+        if self.is_animating == True:
+            self.current_sprite +=1
+            if self.current_sprite >= len(self.sprites):
+                self.current_sprite = 0
+                self.is_animating = False
+
+            self.image = self.sprites[self.current_sprite]
 
 
 
@@ -82,6 +116,11 @@ cheeks = Cheeks("./cheeks.jpg")
 cheeks_group = pygame.sprite.Group()
 cheeks_group.add(cheeks)
 
+# Surprising
+surprising_sprites = pygame.sprite.Group()
+surprising = Surpring()
+surprising_sprites.add(surprising)
+
 # Player
 moving_sprites = pygame.sprite.Group()
 player = Player(100,100)
@@ -95,7 +134,8 @@ while True:
         
         if event.type == pygame.MOUSEBUTTONDOWN:
             hand.giggling()
-            
+        
+                
         # if event.type == pygame.KEYBOARDUP: && keypress 'S'
         #    surprise.surprised() # 놀라는 음성 추가
     
@@ -103,10 +143,19 @@ while True:
     pygame.display.flip()
     screen.blit(background, (0,0))
     # cheeks_group.draw(screen)
+    if event.type ==pygame.KEYUP:
+        moving_sprites.draw(screen)
+        moving_sprites.update()
 
-    moving_sprites.draw(screen)
-    moving_sprites.update()
+    if event.type ==pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE: # 스페이스바를 누르면 놀란다
+                surprising.animate() # excute just Once!
+                surprising_sprites.draw(screen)
+                surprising_sprites.update()
+
+    
 
     hand_group.draw(screen)
     hand_group.update()
+
     clock.tick(60)
