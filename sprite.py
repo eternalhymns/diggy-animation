@@ -22,11 +22,11 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = [pos_x, pos_y]
     
     def update(self):
-        self.current_sprite +=1
+        self.current_sprite += 0.2
         if self.current_sprite >= len(self.sprites):
             self.current_sprite = 0
 
-        self.image = self.sprites[self.current_sprite]
+        self.image = self.sprites[int(self.current_sprite)]
 
 # 놀람
 class Surpring(pygame.sprite.Sprite):
@@ -131,9 +131,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type ==pygame.MOUSEMOTION:
-            moving_sprites.draw(screen)
-            moving_sprites.update()
+       
         if event.type == pygame.MOUSEBUTTONDOWN:
             hand.giggling()
         
@@ -146,7 +144,8 @@ while True:
     screen.blit(background, (0,0))
     # cheeks_group.draw(screen)
     
-
+    moving_sprites.draw(screen)
+    moving_sprites.update()
     if event.type ==pygame.KEYDOWN:
             if event.key == pygame.K_SPACE: # 스페이스바를 누르면 놀란다
                 surprising.animate() # excute just Once!
@@ -154,7 +153,7 @@ while True:
                 surprising_sprites.update()
 
     
-
+  
     hand_group.draw(screen)
     hand_group.update()
 
