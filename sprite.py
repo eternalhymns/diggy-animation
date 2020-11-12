@@ -2,24 +2,24 @@ import pygame, sys, random
 
 # Player클래스는 Blink 클래스로 수정하자 프로그램 실행 시 눈 계속 깜빡이게 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos_x, pos_y):
+    def __init__(self):
         super().__init__()
         self.sprites = []
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_1.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_2.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_3.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_4.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_5.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_6.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_7.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_8.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_9.png"))
-        self.sprites.append(pygame.image.load("./frogPlayer/attack_10.png"))
+        self.sprites.append(pygame.image.load("./expression_default/1.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/2.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/3.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/4.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/5.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/6.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/7.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/8.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/9.jpg"))
+        self.sprites.append(pygame.image.load("./expression_default/10.jpg"))
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
         self.rect = self.image.get_rect()
-        self.rect.topleft = [pos_x, pos_y]
+        
     
     def update(self):
         self.current_sprite += 0.2
@@ -34,16 +34,16 @@ class Surpring(pygame.sprite.Sprite):
         super().__init__()
         self.sprites = []
         self.is_animating = False
-        self.sprites.append(pygame.image.load("./surprise/1_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/1_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/2_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/3_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/4_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/5_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/6_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/7_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/8_blink.jpg"))
-        self.sprites.append(pygame.image.load("./surprise/9_blink.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/1.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/1.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/2.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/3.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/4.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/5.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/6.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/7.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/8.jpg"))
+        self.sprites.append(pygame.image.load("./surprise/9.jpg"))
         
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
@@ -56,7 +56,7 @@ class Surpring(pygame.sprite.Sprite):
     
     def update(self):
         if self.is_animating == True:
-            self.current_sprite += 0.2
+            self.current_sprite += 0.35
             if self.current_sprite >= len(self.sprites):
                 self.current_sprite = 0
                 self.is_animating = False
@@ -123,7 +123,7 @@ surprising_sprites.add(surprising)
 
 # Player
 moving_sprites = pygame.sprite.Group()
-player = Player(100,100)
+player = Player()
 moving_sprites.add(player)
 
 while True:
@@ -146,6 +146,7 @@ while True:
     
     moving_sprites.draw(screen)
     moving_sprites.update()
+
     if event.type ==pygame.KEYDOWN:
             if event.key == pygame.K_SPACE: # 스페이스바를 누르면 놀란다
                 surprising.animate() # excute just Once!
