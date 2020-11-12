@@ -45,6 +45,8 @@ class Surpring(pygame.sprite.Sprite):
         self.sprites.append(pygame.image.load("./surprise/8.jpg"))
         self.sprites.append(pygame.image.load("./surprise/9.jpg"))
         
+        self.oooh = pygame.mixer.Sound("surprised.wav")
+
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
 
@@ -53,7 +55,9 @@ class Surpring(pygame.sprite.Sprite):
     def animate(self):
         self.is_animating = True
 
-    
+    def ooohsound (self):
+        self.oooh.play()
+
     def update(self):
         if self.is_animating == True:
             self.current_sprite += 0.35
@@ -69,7 +73,6 @@ class Happy(pygame.sprite.Sprite):
         self.sprites = []
         self.is_animating = False
         self.sprites.append(pygame.image.load("./happy/1.jpg"))
-        self.sprites.append(pygame.image.load("./happy/1.jpg"))
         self.sprites.append(pygame.image.load("./happy/2.jpg"))
         self.sprites.append(pygame.image.load("./happy/3.jpg"))
         self.sprites.append(pygame.image.load("./happy/4.jpg"))
@@ -78,6 +81,8 @@ class Happy(pygame.sprite.Sprite):
         self.sprites.append(pygame.image.load("./happy/7.jpg"))
         self.sprites.append(pygame.image.load("./happy/8.jpg"))
         self.sprites.append(pygame.image.load("./happy/9.jpg"))
+        self.sprites.append(pygame.image.load("./happy/10.jpg"))
+        
         
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
@@ -87,7 +92,6 @@ class Happy(pygame.sprite.Sprite):
     def animate(self):
         self.is_animating = True
 
-    
     def update(self):
         if self.is_animating == True:
             self.current_sprite += 0.35
@@ -146,9 +150,9 @@ hand_group = pygame.sprite.Group()
 hand_group.add(hand)
 
 # Cheeks (static)
-cheeks = Cheeks("./cheeks.jpg")
-cheeks_group = pygame.sprite.Group()
-cheeks_group.add(cheeks)
+#cheeks = Cheeks("./cheeks.jpg")
+#cheeks_group = pygame.sprite.Group()
+#cheeks_group.add(cheeks)
 
 # Surprising
 surprising_sprites = pygame.sprite.Group()
@@ -157,8 +161,8 @@ surprising_sprites.add(surprising)
 
 # Bagic
 moving_sprites = pygame.sprite.Group()
-player = Bagic()
-moving_sprites.add(player)
+bagic = Bagic()
+moving_sprites.add(bagic)
 
 # Happy
 happy_sprites = pygame.sprite.Group()
@@ -177,7 +181,6 @@ while True:
             happy_sprites.draw(screen)
             happy_sprites.update()
 
-            
         
                 
         # if event.type == pygame.KEYBOARDUP: && keypress 'S'
@@ -193,6 +196,7 @@ while True:
 
     if event.type ==pygame.KEYDOWN:
             if event.key == pygame.K_SPACE: # 스페이스바를 누르면 놀란다
+                surprising.ooohsound()
                 surprising.animate() # excute just Once!
                 surprising_sprites.draw(screen)
                 surprising_sprites.update()
