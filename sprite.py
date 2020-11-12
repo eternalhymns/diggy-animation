@@ -1,7 +1,7 @@
 import pygame, sys, random
 
 # Player클래스는 Blink 클래스로 수정하자 프로그램 실행 시 눈 계속 깜빡이게 
-class Player(pygame.sprite.Sprite):
+class Bagic(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.sprites = []
@@ -63,6 +63,40 @@ class Surpring(pygame.sprite.Sprite):
 
             self.image = self.sprites[int(self.current_sprite)]
 
+class Happy(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.sprites = []
+        self.is_animating = False
+        self.sprites.append(pygame.image.load("./happy/1.jpg"))
+        self.sprites.append(pygame.image.load("./happy/1.jpg"))
+        self.sprites.append(pygame.image.load("./happy/2.jpg"))
+        self.sprites.append(pygame.image.load("./happy/3.jpg"))
+        self.sprites.append(pygame.image.load("./happy/4.jpg"))
+        self.sprites.append(pygame.image.load("./happy/5.jpg"))
+        self.sprites.append(pygame.image.load("./happy/6.jpg"))
+        self.sprites.append(pygame.image.load("./happy/7.jpg"))
+        self.sprites.append(pygame.image.load("./happy/8.jpg"))
+        self.sprites.append(pygame.image.load("./happy/9.jpg"))
+        
+        self.current_sprite = 0
+        self.image = self.sprites[self.current_sprite]
+
+        self.rect = self.image.get_rect()
+
+    def animate(self):
+        self.is_animating = True
+
+    
+    def update(self):
+        if self.is_animating == True:
+            self.current_sprite += 0.35
+            if self.current_sprite >= len(self.sprites):
+                self.current_sprite = 0
+                self.is_animating = False
+
+            self.image = self.sprites[int(self.current_sprite)]
+
 
 
 
@@ -79,13 +113,13 @@ class Hand(pygame.sprite.Sprite):
     def update(self):
         self.rect.center = pygame.mouse.get_pos()
         
-class Cheeks(pygame.sprite.Sprite):
-    def __init__(self,picture_path):
-        super().__init__()
-        self.image = pygame.image.load(picture_path)
-        self.rect = self.image.get_rect()
-
-        # 이 클래스로 만들어질 객체는 마우스 따라 움직이지 않고, 제자리에 고정됨
+#class Cheeks(pygame.sprite.Sprite):
+#    def __init__(self,picture_path):
+#        super().__init__()
+#        self.image = pygame.image.load(picture_path)
+#        self.rect = self.image.get_rect()
+#
+#        # 이 클래스로 만들어질 객체는 마우스 따라 움직이지 않고, 제자리에 고정됨
         
 
 
@@ -121,10 +155,15 @@ surprising_sprites = pygame.sprite.Group()
 surprising = Surpring()
 surprising_sprites.add(surprising)
 
-# Player
+# Bagic
 moving_sprites = pygame.sprite.Group()
-player = Player()
+player = Bagic()
 moving_sprites.add(player)
+
+# Happy
+happy_sprites = pygame.sprite.Group()
+happy = Happy()
+happy_sprites.add(happy)
 
 while True:
     for event in pygame.event.get():
@@ -134,6 +173,11 @@ while True:
        
         if event.type == pygame.MOUSEBUTTONDOWN:
             hand.giggling()
+            happy.animate() # excute just Once!
+            happy_sprites.draw(screen)
+            happy_sprites.update()
+
+            
         
                 
         # if event.type == pygame.KEYBOARDUP: && keypress 'S'
@@ -153,6 +197,11 @@ while True:
                 surprising_sprites.draw(screen)
                 surprising_sprites.update()
 
+    if event.type == pygame.MOUSEBUTTONDOWN:
+            hand.giggling()
+            happy.animate() # excute just Once!
+            happy_sprites.draw(screen)
+            happy_sprites.update()
     
   
     hand_group.draw(screen)
